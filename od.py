@@ -2,8 +2,8 @@ import minizinc
 import pandas as pd
 
 # PARAMETERS
-inputFile = 'student-preferences.xlsx'
-outputFile='new_student-preferences.xlsx'
+inputFile = 'sus-preferences.xlsx'
+outputFile='assigned_sus-preferences.xlsx'
 priorityColumnNames='prio'
 studentColumnName='SuS-Nr'
 totalBuckets=4
