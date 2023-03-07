@@ -1,6 +1,6 @@
 # Optimized Distribution
 
-> Python [script](./od.py) to optimaly distribute SuS into buckets, according to their preferences.
+> [Python script](./od.py) to optimaly distribute SuS into buckets, according to their preferences.
 
 ## Parameters
 - `inputFile` – .xlsx-file used as input (headers: "SuS-Nr", "priority 1", "priority 2", "priority 3")
