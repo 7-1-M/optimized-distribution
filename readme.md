@@ -3,15 +3,15 @@
 > Python script to optimaly distribute SuS into buckets, according to their preferences.
 
 ## Parameters
-- `inputFile`: .xlsx-file used as input
-- `outputFile`: .xslx output file
-- `priorityColumnNames`: string to identify columns containing preferences (used in `str.contains()`) (depends on your inputFile)
-- `studentColumnName`: string to identify columns containing the SuS number (depends on your inputFile)
-- `totalBuckets`: Number of available buckets
-- `bucketMin`: Minimum number of SuS per bucket
-- `bucketMax`: Maximum number of SuS per bucket
-- `assignOnlyPriorities`: only assign SuS to bucket that they chose (default=True)
-- `choiceGracePoints`: Used as "weight" to measure *fulfilment of preference*, default=[10,6,2]
+- `inputFile` – .xlsx-file used as input
+- `outputFile` – .xslx output file
+- `priorityColumnNames` – string to identify columns containing preferences (used in `str.contains()`) (depends on your inputFile)
+- `studentColumnName` – string to identify columns containing the SuS number (depends on your inputFile)
+- `totalBuckets` – Number of available buckets
+- `bucketMin` – Minimum number of SuS per bucket
+- `bucketMax` – Maximum number of SuS per bucket
+- `assignOnlyPriorities` – only assign SuS to bucket that they chose (default=True)
+- `choiceGracePoints` – Used as "weight" to measure *fulfilment of preference*, default=[10,6,2]
 
 
 ## Dependencies
