@@ -1,4 +1,4 @@
-# Optimized Distrubtion
+# Optimized Distribution
 
 > Python script to optimaly distribute SuS into buckets, according to their preferences.
 
