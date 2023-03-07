@@ -4,7 +4,7 @@
 
 ## Parameters
 - `inputFile` – .xlsx-file used as input
-- `outputFile` – .xslx output file
+- `outputFile` – .xlsx output file
 - `priorityColumnNames` – string to identify columns containing preferences (used in `str.contains()`) (depends on your inputFile)
 - `studentColumnName` – string to identify columns containing the SuS number (depends on your inputFile)
 - `totalBuckets` – Number of available buckets
