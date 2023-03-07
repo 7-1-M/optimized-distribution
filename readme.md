@@ -27,3 +27,7 @@
 - [python3](https://www.python.org/download/releases/3.0/)
 - [pandas](https://pypi.org/project/pandas/)
 - [MiniZinc](https://www.minizinc.org/doc-2.5.5/en/installation.html#)
+
+# Disclaimer
+Free Use: do whatever to suit your needs :)
+Execute any script optained on this repo with caution!
