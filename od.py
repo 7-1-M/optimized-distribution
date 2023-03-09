@@ -6,12 +6,16 @@ inputFile = 'sus-preferences.xlsx'
 outputFile='assigned_sus-preferences.xlsx'
 priorityColumnNames='prio'
 studentColumnName='SuS-Nr'
-totalBuckets=4
-bucketMin=4
-bucketMax=100
+buckets=[
+  [1,10],
+  [1,10],
+  [1,15],
+  [1,11],
+]
 assignOnlyPriorities=True
 choiceGracePoints=[10,6,2] # adjust when adding more priorities!
 
+totalBuckets=len(buckets)
 df = pd.read_excel(inputFile)
 totalPreferences=df.loc[:, df.columns.str.contains(priorityColumnNames)].shape[1] #don't change!
 totalStudents=len(df.index) #don't change!
@@ -32,12 +36,14 @@ array[SuS, Preferences] of Buckets: choices;
 
 array[Preferences] of int: choiceGracePoints;
 var int: choiceGrace;
-""")
 
-## Create assignments
-model.add_string("""
 array[SuS] of var Buckets: assignments;
 """)
+
+model.add_string(f"""
+array[Buckets, 1 .. 2] of int: bucketParams = array2d(Buckets, 1..2, {[elem for bucket in buckets for elem in bucket]});
+""")
+# array2d(Buckets, 1..2) of int: bucketParams = {buckets};
 
 # CONSTRAINTS
 ## number of SuS per bucket according to consts "bucketMin" & "bucketMax"
@@ -45,9 +51,9 @@ model.add_string("""
 constraint
   forall (b in Buckets) (
     let { var int: occ = sum([assignments[s] == b | s in SuS]) } 
-    in (occ >= %i) /\ (occ <= %i)
+    in (occ >= bucketParams[b, 1]) /\ (occ <= bucketParams[b, 2])
   );
-"""%(bucketMin,bucketMax))
+""")
 
 ## each SuS must be assigned to one of his/her selected buckets
 if (assignOnlyPriorities):
