@@ -3,15 +3,15 @@
 > [Python script](./od.py) to optimaly distribute SuS into buckets, according to their preferences.
 
 ## Parameters
-- `inputFile` – .xlsx-file used as input (headers: "SuS-Nr", "priority 1", "priority 2", "priority 3")
-- `outputFile` – .xlsx output file
-- `priorityColumnNames` – string to identify excel-columns containing preferences (used with `str.contains()`) (depends on your `inputFile`)
-- `studentColumnName` – string to identify columns containing the SuS number (depends on your inputFile)
-- `totalBuckets` – Number of available buckets
-- `bucketMin` – Minimum number of SuS per bucket
-- `bucketMax` – Maximum number of SuS per bucket
-- `assignOnlyPriorities` – only assign SuS to bucket that they chose (default=True)
-- `choiceGracePoints` – Used as "weight" to measure *fulfilment of preference*, default=[10,6,2]
+- `input_file` – .xlsx-file used as input (headers: "SuS-Nr", "priority 1", "priority 2", "priority 3")
+- `output_file` – .xlsx output file
+- `priority_column_name_identifier` – string to identify excel-columns containing preferences (used with `str.contains()`) (depends on your `inputFile`)
+- `num_iterations` – total numer of picks per SuS (use this when picking for several iterations of the same buckets, e.g. Q1, Q2, Q3, Q4)
+- `buckets` – Array Item for each bucket with `[min,max]` amount of students per bucket
+- `assign_only_priorities` – only assign SuS to bucket that they chose (default=True)
+- `ignore_choice_grace` – Remove "weight" from priorities. Assigned buckets still meet all other constraints!
+- `choice_grace_points` – Used as "weight" to measure *fulfilment of preference*, default=[10,6,2] (adjust when adding more priorities!)
+- `approximate_best_solution` – time safing measure. The presented solution satisfies all constraints but may not be optimal. default=True
 
 ### How To
 
