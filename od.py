@@ -101,7 +101,7 @@ if ignore_choice_grace or approximate_best_solution:
 else:
   model.add_string('solve maximize choiceGrace')
 
-inst = minizinc.Instance(minizinc.Solver.lookup("gecode"), model)
+inst = minizinc.Instance(minizinc.Solver.lookup("chuffed"), model)
 
 ## assign priorities from excel to instance
 inst['choices'] = df.loc[:, df.columns.str.contains(priority_column_name_identifier)].to_numpy()
