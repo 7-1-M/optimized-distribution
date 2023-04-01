@@ -6,17 +6,41 @@ import time
 input_file = 'sus-preferences.xlsx'
 output_file='assigned_sus-preferences.xlsx'
 priority_column_name_identifier='prio'
-num_iterations = 2 # change to how may times a bucket is "fillable"
+num_iterations = 1 # change to how may times a bucket is "fillable"
 buckets = [
-  [1,10],
-  [1,24],
-  [1,20],
-  [1,20],
+  [10,12],
+  [10,12],
+  [10,12],
+  [10,12],
+  [10,12],
+
+  [10,12],
+  [10,12],
+  [10,12],
+  [10,12],
+  [10,12],
+
+  [10,12],
+  [10,12],
+  [10,12],
+  [10,12],
+  [10,12],
+
+  [10,12],
+  [10,12],
+  [10,12],
+  [10,12],
+  [10,12],
+
+  [10,12],
+  [10,12],
+  [10,12],
+  [10,12],
 ]
 assign_only_priorities = True
-ignore_choice_grace=False
-approximate_best_solution=True
-choice_grace_points=[10,6,2] # adjust when adding more priorities!
+ignore_choice_grace=True
+approximate_best_solution=False
+choice_grace_points=[10,6,2,1] # adjust when adding more priorities!
 
 num_buckets=len(buckets)
 df = pd.read_excel(input_file)
@@ -24,6 +48,13 @@ num_prefs=df.loc[:, df.columns.str.contains(priority_column_name_identifier)].sh
 num_sus=len(df.index) #don't change!
 approximation_threshold = 0.05
 optimal_grace_value = num_sus * num_iterations * ( sum(choice_grace_points) / len(choice_grace_points) )
+
+print("SuS:", num_sus)
+print("Preferences:", num_prefs)
+print("Buckets:", num_buckets)
+print("Iterations:", num_iterations)
+
+print(df)
 
 # MINIZINC MODEL SETUP
 ## Create a MiniZinc model
