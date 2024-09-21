@@ -3,12 +3,12 @@ import pandas as pd
 import minizinc
 
 # PARAMETERS
-input_file = 'sus-preferences.xlsx'
-output_file='assigned_sus-preferences.xlsx'
-pref_header_identifier="pref"
-atelier_header_identifier="\(at"
-num_iterations = 3 # change to how may times a bucket is "fillable"
-buckets = [
+INPUT_FILE = 'sus-preferences.xlsx'
+OUTPUT_FILE='assigned_sus-preferences.xlsx'
+PREF_HEADER_IDENTIFIER="pref"
+ATELIER_HEADER_IDENTIFIER="\(at"
+NUM_ITERATIONS = 3 # change to how may times a bucket is "fillable"
+BUCKETS = [
   [14,16],
   [14,16],
   [9,10], #Tüftelwerkstatt max.9
@@ -22,16 +22,16 @@ buckets = [
   [14,16],
 ]
 
-num_buckets=len(buckets)
-df = pd.read_excel(input_file, header=3) # change the number of headers depending on your excel file
+NUM_BUCKETS=len(BUCKETS)
+df = pd.read_excel(INPUT_FILE, header=3) # change the number of headers depending on your excel file
 
-num_prefs=df.loc[:, df.columns.str.contains(pref_header_identifier)].shape[1] #don't change!
+num_prefs=df.loc[:, df.columns.str.contains(PREF_HEADER_IDENTIFIER)].shape[1] #don't change!
 num_sus=len(df.index) #don't change!
 
 print("SuS:", num_sus)
 print("Preferences:", num_prefs)
-print("Buckets:", num_buckets)
-print("Iterations:", num_iterations)
+print("Buckets:", NUM_BUCKETS)
+print("Iterations:", NUM_ITERATIONS)
 
 # MINIZINC MODEL SETUP
 ## Create a MiniZinc model
@@ -40,8 +40,8 @@ model.add_string(f"""
 include "globals.mzn";
 
 int: S = {num_sus};
-int: B = {num_buckets};
-int: I = {num_iterations};
+int: B = {NUM_BUCKETS};
+int: I = {NUM_ITERATIONS};
 int: P = {num_prefs};
 
 set of int: Preferences = 1 .. P;
@@ -53,7 +53,7 @@ array[SuS, Preferences] of Buckets: choices;
 
 array[BucketIterations, SuS] of var Buckets: assignments;
 
-array[Buckets, 1 .. 2] of int: bucketParams = array2d(Buckets, 1..2, {[elem for bucket in buckets for elem in bucket]});
+array[Buckets, 1 .. 2] of int: bucketParams = array2d(Buckets, 1..2, {[elem for bucket in BUCKETS for elem in bucket]});
 """)
 
 # CONSTRAINTS
@@ -69,13 +69,13 @@ constraint
 """)
 
 ## if multiple iterations: each SuS is assigned only once per bucket
-if (num_iterations > 1):
-  model.add_string("""
-    constraint
-      forall (s in SuS) (
-        alldifferent([assignments[bi, s] | bi in BucketIterations])
-      );
-  """) 
+if NUM_ITERATIONS > 1:
+    model.add_string("""
+      constraint
+        forall (s in SuS) (
+          alldifferent([assignments[bi, s] | bi in BucketIterations])
+        );
+    """)
 
 ## each SuS must not be assigned to one of his/her selected buckets
 model.add_string("""
@@ -91,7 +91,7 @@ model.add_string('solve satisfy')
 inst = minizinc.Instance(minizinc.Solver.lookup("chuffed"), model)
 
 ## assign priorities from excel to instance
-inst['choices'] = df.loc[:, df.columns.str.contains(pref_header_identifier)].to_numpy()
+inst['choices'] = df.loc[:, df.columns.str.contains(PREF_HEADER_IDENTIFIER)].to_numpy()
 
 start_time = time.time()
 result = inst.solve()
@@ -100,8 +100,8 @@ print("Time taken:", time.time() - start_time)
 ## write output to new excel file
 print(result)
 for i in range(len(result['assignments'])):
-  print("iteration: " + str(i + 1))
-  df[f'ASSIGNED BUCKET (iteration {i + 1})'] = result['assignments'][i-1]
-  print(df)
+    print("iteration: " + str(i + 1))
+    df[f'ASSIGNED BUCKET (iteration {i + 1})'] = result['assignments'][i-1]
+    print(df)
 
-df.to_excel(output_file, index=False)
+df.to_excel(OUTPUT_FILE, index=False)
